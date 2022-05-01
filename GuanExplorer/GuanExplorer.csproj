@@ -1,0 +1,62 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+	<RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+	<StartupObject>DatalogExplorer.App</StartupObject>
+    <Description>App allowing editing and running of Datalog programs</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\content-save.png" />
+    <None Remove="Images\Copy.ico" />
+    <None Remove="Images\Cut.ico" />
+    <None Remove="Images\Delete.ico" />
+    <None Remove="Images\format-font-size-decrease.png" />
+    <None Remove="Images\format-font-size-increase.png" />
+    <None Remove="Images\OpenFile.ico" />
+    <None Remove="Images\Paste.ico" />
+    <None Remove="Images\play.png" />
+    <None Remove="Images\Redo.ico" />
+    <None Remove="Images\Undo.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AvalonEdit" Version="6.1.3.50" />
+    <PackageReference Include="Microsoft.Logic.Guan" Version="1.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\content-save.png" />
+    <Resource Include="Images\Copy.ico" />
+    <Resource Include="Images\Cut.ico" />
+    <Resource Include="Images\Delete.ico" />
+    <Resource Include="Images\format-font-size-decrease.png" />
+    <Resource Include="Images\format-font-size-increase.png" />
+    <Resource Include="Images\OpenFile.ico" />
+    <Resource Include="Images\Paste.ico" />
+    <Resource Include="Images\play.png" />
+    <Resource Include="Images\Redo.ico" />
+    <Resource Include="Images\Undo.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+</Project>
