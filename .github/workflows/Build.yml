@@ -29,5 +29,5 @@ jobs:
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Build and publish
-      run: dotnet publish -r win-x64  --source https://api.nuget.org/v3/index.json --self-contained true  -p:PublishSingleFile=true  DatalogExplorer.sln
+      run: dotnet publish -r win-x64  --source https://api.nuget.org/v3/index.json --self-contained true  -p:PublishSingleFile=true  GuanExplorer\GuanExplorer.sln
   
