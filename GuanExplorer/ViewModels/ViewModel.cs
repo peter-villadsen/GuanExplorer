@@ -138,6 +138,9 @@ namespace DatalogExplorer.ViewModels
             try
             {
                 // Compile the facts and rules.
+                // Guan only offers an API that deals with parsing one rule at the time. This
+                // makes it quite useless for this kind of application. For now, just assume
+                // that each rule is on a separate line.
                 var rules = rulesText.Split(Environment.NewLine).Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
                 var module = Module.Parse("Source", rules, null);
 
@@ -170,14 +173,10 @@ namespace DatalogExplorer.ViewModels
 
         #endregion
 
-        private static void UpdateProgramView(Module module, IList<Term> results, MainWindow view)
+        private void UpdateProgramView(Module module, IList<Term> results, MainWindow view)
         {
             view.ProgramTree.Items.Clear();
-
-            foreach (var pt in module.GetPublicTypes())
-            {
-
-            }
+            var result = string.Empty;
 
             foreach (Term term in results)
             {
@@ -185,34 +184,22 @@ namespace DatalogExplorer.ViewModels
             }
 
             // Copy the results to the worksheet, below the query text
-            Console.WriteLine($"answer: {string.Join(',', results)}"); // convert the List<Term> object into a comma-delimited string.
+            result += $"{string.Join(Environment.NewLine, results)}{Environment.NewLine}";
 
-            //foreach (IGrouping<string, Sharplog.Expr> fact in universe.GetEdbProvider().AllFacts().All.GroupBy(f => f.PredicateWithArity).OrderBy(f => f.Key))
-            //{
-            //    var category = new TreeViewItem() { Header = fact.Key };
-            //    view.ProgramTree.Items.Add(category);
+            view.TranscriptEditor.AppendText(result);
 
-            //    foreach (var q in fact)
-            //    {
-            //        var factNode = new TreeViewItem() { Header = q.ToString() };
-            //        category.Items.Add(factNode);
-            //    }
-            //}
+            // Update the Program view with the information
+        }
 
-            //foreach (var q in universe.Idb.GroupBy(f => f.Key).OrderBy(f => f.Key))
-            //{
-            //    var category = new TreeViewItem() { Header = q.Key };
-            //    view.ProgramTree.Items.Add(category);
-
-            //    foreach (var r in q)
-            //    {
-            //        foreach (var s in r.Value)
-            //        {
-            //            var ruleNode = new TreeViewItem() { Header = s.ToString() };
-            //            category.Items.Add(ruleNode);
-            //        }
-            //    }
-            //}
+        private string result = string.Empty;
+        public string Result
+        {
+            get => this.result;
+            set
+            {
+                this.result = value;
+                this.OnPropertyChanged(nameof(Result));
+            }
         }
 
         public ViewModel()

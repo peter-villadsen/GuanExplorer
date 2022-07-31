@@ -9,7 +9,7 @@
         xmlns:views="clr-namespace:DatalogExplorer.ViewModels"
         
         mc:Ignorable="d"
-        Title="Datalog Explorer" Height="450" Width="800">
+        Title="Guan Explorer" Height="450" Width="800">
 
     <Window.InputBindings>
         <KeyBinding Command="{Binding SaveFileCommand}" CommandParameter="{Binding ElementName=Main}" Gesture="CTRL+S"/>

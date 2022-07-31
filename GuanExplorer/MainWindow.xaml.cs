@@ -23,6 +23,18 @@ namespace DatalogExplorer
                 viewmodel.CaretPositionString = string.Format(CultureInfo.CurrentCulture, "Line: {0} Column: {1}", caret.Line, caret.Column);
             };
             this.DataContext = viewModel;
+
+            viewmodel.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName ==nameof(ViewModels.ViewModel.Result))
+                {
+                    var res = viewModel.Result;
+                    // Go to the end of the line, add a line break and insert the answer.
+                    this.TranscriptEditor.TextArea.Caret.Line = 1000;
+
+                    this.TranscriptEditor.AppendText(Environment.NewLine + res);
+                }
+            };
         }
 
         protected override void OnContentRendered(EventArgs e)
