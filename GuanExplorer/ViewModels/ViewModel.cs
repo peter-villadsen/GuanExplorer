@@ -10,6 +10,7 @@ using GuanExplorer.Properties;
 using Guan.Logic;
 using System.Collections.Generic;
 using ICSharpCode.AvalonEdit;
+using System.Windows.Controls;
 
 namespace DatalogExplorer.ViewModels
 {
@@ -151,7 +152,11 @@ namespace DatalogExplorer.ViewModels
                 QueryContext queryContext = new QueryContext(moduleProvider);
 
                 // The Query instance that will be used to execute the supplied query expression over the related rules.
+
+                // Get rid of comments with double dash
                 var queryText = GetQueryText(view.TranscriptEditor);
+                queryText = queryText.Trim();
+
                 Query query = Query.Create(queryText, queryContext);
 
                 // Execute the query. 
@@ -162,7 +167,7 @@ namespace DatalogExplorer.ViewModels
             }
             catch (Exception ex)
             {
-                view.TranscriptEditor.Text = ex.Message;
+                view.TranscriptEditor.AppendText(Environment.NewLine + ex.Message);
             }
             finally
             {
@@ -176,16 +181,14 @@ namespace DatalogExplorer.ViewModels
         private void UpdateProgramView(Module module, IList<Term> results, MainWindow view)
         {
             view.ProgramTree.Items.Clear();
-            var result = string.Empty;
-
-            foreach (Term term in results)
-            {
-                Console.WriteLine(term);
-            }
+            var rootItem = new TreeViewItem() { Header = $"{module.Name}" };
+            rootItem.ItemsSource = module.GetPublicTypes().Select(n => n.Name + "(" + string.Join(",", n.RequiredArguments) + ")");
+            rootItem.IsExpanded = true;
 
             // Copy the results to the worksheet, below the query text
-            result += $"{string.Join(Environment.NewLine, results)}{Environment.NewLine}";
+            var result = $"{string.Join(Environment.NewLine, results)}{Environment.NewLine}";
 
+            view.ProgramTree.Items.Add(rootItem);
             view.TranscriptEditor.AppendText(result);
 
             // Update the Program view with the information

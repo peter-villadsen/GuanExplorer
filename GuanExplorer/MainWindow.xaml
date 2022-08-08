@@ -115,6 +115,7 @@
                         <RowDefinition Height="70*"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="30*"/>
+
                     </Grid.RowDefinitions>
                     <GroupBox  Grid.Row="0" Header="Data">
                         <Grid>
@@ -152,14 +153,15 @@
                             </ToolBarTray>
                             <avalonedit:TextEditor Grid.Row="1" x:Name="FactsAndRulesEditor" PreviewMouseWheel="MouseWheelHandler" Margin="0,2,0,0"  ShowLineNumbers="{Binding ShowLineNumbers}" FontFamily="Consolas" FontSize="{Binding FontSize}"/>
                         </Grid>
-
                     </GroupBox>
+
                     <GridSplitter Grid.Row="1" Style="{StaticResource HorizontalSplitter}"  />
+                    
                     <GroupBox Grid.Row="2" Header="Transcript">
                         <avalonedit:TextEditor x:Name="TranscriptEditor" PreviewMouseWheel="MouseWheelHandler" Margin="0,2,0,0"  ShowLineNumbers="{Binding ShowLineNumbers}" FontFamily="Consolas" FontSize="{Binding FontSize}" >
                         </avalonedit:TextEditor>
-
                     </GroupBox>
+
                 </Grid>
 
             </Grid>
