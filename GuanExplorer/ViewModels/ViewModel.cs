@@ -11,6 +11,7 @@ using Guan.Logic;
 using System.Collections.Generic;
 using ICSharpCode.AvalonEdit;
 using System.Windows.Controls;
+using System.Text.RegularExpressions;
 
 namespace DatalogExplorer.ViewModels
 {
@@ -127,11 +128,12 @@ namespace DatalogExplorer.ViewModels
             return editor.Text;
         }
 
+        private static Regex removeComments = new Regex(@"##.*");
+
         public ICommand ExecuteCommand => new RelayCommand(async p =>
         {
             var view = (MainWindow)p!;
             string rulesText = view.FactsAndRulesEditor.Text;
-
 
             Stopwatch sw = new();
             sw.Start();
@@ -142,7 +144,9 @@ namespace DatalogExplorer.ViewModels
                 // Guan only offers an API that deals with parsing one rule at the time. This
                 // makes it quite useless for this kind of application. For now, just assume
                 // that each rule is on a separate line.
+                rulesText = removeComments.Replace(rulesText, "");
                 var rules = rulesText.Split('\n').Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+
                 var module = Module.Parse("Source", rules, null);
 
                 ModuleProvider moduleProvider = new ModuleProvider();
