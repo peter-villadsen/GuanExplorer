@@ -142,7 +142,7 @@ namespace DatalogExplorer.ViewModels
                 // Guan only offers an API that deals with parsing one rule at the time. This
                 // makes it quite useless for this kind of application. For now, just assume
                 // that each rule is on a separate line.
-                var rules = rulesText.Split(Environment.NewLine).Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+                var rules = rulesText.Split('\n').Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
                 var module = Module.Parse("Source", rules, null);
 
                 ModuleProvider moduleProvider = new ModuleProvider();
